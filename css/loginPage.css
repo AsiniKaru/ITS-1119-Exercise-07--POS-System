@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Racing+Sans+One&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" );
+
+
+#loginPage{
+    display: flex;
+    height: 100vh;
+}
+
+.loginLeft{
+    width: 50%;
+    display: flex; 
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+.loginRight{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 60px;
+}
+
+.loginRight h1{
+    font-family: 'Sansita', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 80px;
+    line-height: 1.5;
+}
+
+.loginForm{
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.formGroup label{
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.formGroup input{
+    width: 100%;
+    padding:12px 15px;
+    background: var(--input-bg);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.formGroup input:focus{
+    background:#b8d8f5;
+    box-shadow: 0 0 0 3px rgba(106,170,212,0.3);
+}
+
+.loginBtn{
+    margin-top: 15px;
+    padding: 16px;
+    background: var(--blue-btn);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.loginBtn:hover { 
+    background: var(--blue-dark); 
+    transform: translateY(-1px); 
+}
+
+.loginError {
+    color: #c0392b;
+    font-size: 0.9rem;
+    text-align: center;
+    display: none;
+    margin-top: -12px;
+  }

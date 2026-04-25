@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/loginPage.css">
+    <link rel="stylesheet" href="./css/dashboardPage.css">
+
+
+</head>
+<body>
+
+
+    <!-- ========== Login Page ========== -->
+    <div id="loginPage">
+        <div class="loginLeft">
+            <img src="./assets/logo.jpg" alt="Logo" class="logo">
+        </div>
+        <div class="loginRight">
+            <h1>Welcome to Grocery Store <br>POS System</h1>
+            <div class="loginForm">
+                <div class="formGroup">
+                    <label >Username</label>
+                    <input type="text" placeholder="Enter your username" autocomplete="off">
+                </div>
+                <div class="formGroup">
+                    <label >Password</label>
+                    <input type="password" placeholder="Enter your password">
+                </div>
+                 <div class="loginError" id="loginError">Invalid username or password</div>
+                <button class="loginBtn" >Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Dashboard Page ========== -->
+
+    <!-- Navbar -->
+    <div id="app">
+        <nav>
+            <button class="navBtn" >Dashboard</button>
+            <button class="navBtn" >Customer Management</button>
+            <button class="navBtn" >Item Management</button>
+            <button class="navBtn" >Order Management</button>
+            <div class="navSpacer"></div>
+            <div class="userWrapper">
+                <button class="userBtn" id="userBtn" onclick="toggleDropdown()">
+                    <img src="./assets/profile.png" alt="User Avatar" class="userAvatar">
+                    <span id="loggedUser">Admin</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="userDropdown" id="userDropdown">
+                    <div class="dropdownHeader">
+                        <div class="dhName" id="dropdownName">Admin</div>
+                        <div class="dhRole">Store Manager</div>
+                    </div>
+                    <button class="dropdownItem logout" onclick="doLogout()">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard -->
+        <div class="mainContent">
+            <div class="sectionActive" id="sectionDashboard">
+                <div class="statsGrid">
+                    <div class="statCard">
+                        <img src="./assets/customer.png" alt="Customer avatar" class="statIcon">
+                        <div class="statNum">0</div>
+                        <div class="statLabel">Customers</div>
+                    </div>
+
+                    <div class="statCard">
+                        <img src="./assets/item.png" alt="Item avatar" class="statIcon">
+                        <div class="statNum">0</div>
+                        <div class="statLabel">Items</div>
+                    </div>
+
+                    <div class="statCard">
+                        <img src="./assets/order.png" alt="Order avatar" class="statIcon">
+                        <div class="statNum">0</div>
+                        <div class="statLabel">Orders</div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- ========== Customer Management ========== -->
+            <div class="section" id="sectionCustomer">
+                <h2 class="sectionTitle">Customer Management</h2>
+                <div class="mgmtLayout">
+                    <div class="mgmtForm">
+                        <label>Customer ID</label>
+                        <input type="text" id="cusId" placeholder="C001"/>
+
+                        <label>Customer Name</label>
+                        <input type="text" id="cusName" placeholder="Full Name"/>  
+                        
+                        <label>Customer Address</label>
+                        <input type="text" id="cusAddress" placeholder="Address"/>  
+
+                        <label>Customer Salary</label>
+                        <input type="text" id="cusSalary" placeholder="0.00"/> 
+                        
+                        <div class="row">
+                            <button class="saveBtn" onclick="saveCustomer()">Save</button>
+                            <button class="updateBtn" onclick="updateCustomer()">Update</button>
+                        </div>
+                        <div class="rowBtn">
+                            <button class="deleteBtn" onclick="deleteCustomer()">Delete</button>
+                            <button class="resetBtn" onclick="resetCustomer()">Reset</button>
+                        </div>
+                        
+                        <div class="table-panel">
+                        <div class="search-row">
+                            <div class="search-input-wrap">
+                                <span>
+                                    <img src="./assets/search.png" alt="Search Icon" class="searchIcon">
+                                </span>
+                                <input class="searchInput" id="cusSearch" type="text" placeholder="Search..." oninput="filterCustomers()"/>
+                            </div>
+                            <button class="btn searchBtn" onclick="filterCustomers()">Search</button>
+                        </div>
+                        <table class="dataTable">
+                            <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Customer Name</th>  
+                                <th>Address</th>
+                                <th>Salary</th>
+                            </tr>
+                            </thead>
+                            <tbody id="cusTBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ========== Item Management ========== -->
+            <div class="section" id="sectionItem">
+                <h2 class="sectionTitle">Item Management</h2>
+                <div class="mgmtLayout">
+                    <div class="mgmtForm">
+                        <label >Item Code</label>
+                        <input type="text" id="itemCode" placeholder="I001" />
+                        <label >Item Name</label>
+                        <input type="text" id="itemName" placeholder="Item Name" />
+                        <label >Item Price</label>
+                        <input type="text" id="itemPrice" placeholder="0.00" />
+                        <label >Item Quantity</label>
+                        <input type="text" id="itemQty" placeholder="0" />
+                        <div class="rowBtn">
+                            <button class="saveBtn" onclick="saveItem()">Save</button>
+                            <button class="updateBtn" onclick="updateItem()">Update</button>
+                        </div>
+                        <div class="rowBtn">
+                            <button class="deleteBtn" onclick="deleteItem()">Delete</button>
+                            <button class="resetBtn" onclick="resetItem()">Reset</button> 
+                        </div>
+                        <div class="tablePanel">
+                        <div class="searchRow">
+                            <div class="searchInputWrap">
+                                <span>
+                                    <img src="./assets/search.png" alt="Search Icon" class="searchIcon">
+                                </span>
+                                <input class="searchInput" id="itemSearch" type="text" placeholder="Search..." oninput="filterItems()"/>
+                            </div>
+                            <button class="btn searchBtn" onclick="filterItems()">Search</button>       
+                        </div>
+                        <table class="dataTable">
+                            <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Item Name</th>
+                                <th>Item Price</th>
+                                <th>Item Qty</th>
+                            </tr>
+                            </thead>
+                            <tbody id="itemTBody"></tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ========== Order Management ========== -->
+            <div class="section" id="sectionOrder">
+                <h2 class="sectionTitle">Order Management</h2>
+                <div class="orderLayout">
+
+                    <!-- Customer Details -->
+                    <div class="orderPanel">
+                        <h3>Customer Details</h3>
+                        <div class="orderField">
+                            <label>Order ID</label>
+                            <input type="text" id="orderId" placeholder="ORD001" readonly/>
+                            <label>Date</label>
+                            <input type="date" id="ordDate"/>
+                            <label>Customer ID</label>
+                            <input type="text" id="orderCusId" placeholder="C001" />
+                            <label>Customer</label>
+                            <input type="text" id="orderCusName" placeholder="Name" readonly/>
+                            <label>Salary</label>
+                            <input type="text" id="orderSalary" placeholder="0.00" readonly/>
+                            <label>Address</label>
+                            <input type="text" id="orderAddress" placeholder="Address" readonly/>
+                        </div>
+                    </div>
+
+                    <!-- Item Details -->
+                    <div class="orderPanel">
+                        <h3>Item Details</h3>
+                        <div class="orderField">
+                            <label>Item Code</label>
+                            <input type="text" id="orderItemCode" placeholder="I001"/>
+                            <label>Item Name</label>
+                            <input type="text" id="orderItemName" placeholder="Item Name" readonly/>
+                            <label>Unit Price</label>
+                            <input type="text" id="orderUnitPrice" placeholder="0.00" readonly/>
+                            <label>QtyH</label>
+                            <input type="text" id="orderQty" placeholder="0" readonly/>
+                            <label>Order Qty</label>
+                            <input type="text" id="orderQtyInput" placeholder="1"/>
+                        </div>
+                        <button class="addItemBtn">Add Item</button>
+                    </div>
+
+                    <!-- Order Items Table -->
+                    <div class="orderTablePanel">
+                        <table class="dataTable">
+                        <thead>
+                            <tr>
+                            <th>Item Code</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
+                            <th>Item Qty</th>
+                            <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderTBody"></tbody>
+                        </table>
+                    </div>
+
+
+                    <!-- Invoice Details -->
+                    <div class="orderPanel">
+                        <h3>Invoice Details</h3>
+                        <div class="invoiceRow">
+                            <label>Total</label>
+                            <input type="text" class="orderTotal" placeholder="0.00" readonly/>  
+                        </div>
+                        <div class="invoiceRow">
+                            <label>Subtotal</label>
+                            <input type="text" class="orderSubTotal" placeholder="0.00" readonly/>
+                        </div>
+                        <div class="invoiceRow">
+                            <label>Discount</label>
+                            <input type="text" class="orderDiscount" placeholder="0.00"/>
+                        </div>
+                        <div class="invoiceRow">7
+                            <label>Cash</label>
+                            <input type="text" class="orderCash" placeholder="0.00"/>
+                        </div>
+                        <div class="invoiceRow">
+                            <label>Balance</label>
+                            <input type="text" class="orderBalance" placeholder="0.00" readonly/>
+                        </div>
+
+                        <button class="btn-purchase" onclick="completePurchase()">🛒 Purchase</button>
+                    </div>
+
+                    <!-- Purchased Items Table -->
+                    <div class="purchasedTablePanel">
+                        <table class="dataTable">
+                        <thead>
+                            <tr>
+                            <th>Order ID</th>
+                            <th>Customer ID</th>
+                            <th>Order Date</th>
+                            <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasedTBody"></tbody>
+                        </table>
+                    </div>     
+
+                </div>     
+            </div>
+        </div>
+    </div>
+</body>
+</html>
