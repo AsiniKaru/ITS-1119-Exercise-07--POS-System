@@ -167,7 +167,7 @@
                         <div class="searchRow">
                             <div class="searchInputWrap">
                                 <img src="./assets/search.png" alt="Search Icon" class="searchIcon">
-                                <input class="searchInput" id="itemSearch" type="text" placeholder="Search..." oninput="filterItems()"/>
+                                <input class="searchInput" id="itemSearch" type="text" placeholder="Search..." />
                             </div>
                             <button class="btn searchBtn" id="filterItems">Search</button>  
                             <button class="btn searchBtn" id="resetItems">Reset</button>       
@@ -203,7 +203,9 @@
                             <label>Date</label>
                             <input type="date" id="orderDate" />
                             <label>Customer</label>
-                            <input type="text" id="orderCustomer" placeholder="C001" />
+                            <select class="form-select" id="cmbCustomer">
+                                <option value="" class="customerDropdown">Select Customer</option>
+                            </select>
                             <label>Salary</label>
                             <input type="text" id="orderSalary" placeholder="0.00" readonly/>
                             <label>Address</label>
@@ -214,19 +216,19 @@
                     <!-- Item Details -->
                     <div class="orderPanel">
                         <h3>Item Details</h3>
-                        <div class="orderField">
+                        <div class="orderField" id="itemDetails">
                             <label>Item Code</label>
-                            <input type="text" id="orderItemCode" placeholder="I001"/>
-                            <label>Item Name</label>
-                            <input type="text" id="orderItemName" placeholder="Item Name" readonly/>
+                            <select class="form-select" id="cmbItem">
+                                <option value="" class="itemDropdown">Select Item</option>
+                            </select>                            
                             <label>Unit Price</label>
                             <input type="text" id="orderUnitPrice" placeholder="0.00" readonly/>
                             <label>QtyH</label>
                             <input type="text" id="orderQty" placeholder="0" readonly/>
                             <label>Order Qty</label>
-                            <input type="text" id="orderQtyInput" placeholder="1"/>
+                            <input type="number" id="orderQtyInput" placeholder="1"/>
                         </div>
-                        <button class="addItemBtn">Add Item</button>
+                        <button class="addItemBtn" id="addItemBtn">Add Item</button>
                     </div>
 
                    
@@ -237,29 +239,29 @@
                         <h3>Invoice Details</h3>
                         <div class="invoiceRow">
                             <label>Total</label>
-                            <input type="text" class="orderTotal" placeholder="0.00" readonly/>  
+                            <input type="text" class="orderTotal" id="orderTotal" placeholder="0.00" readonly/>  
                         </div>
                         <div class="invoiceRow">
                             <label>Subtotal</label>
-                            <input type="text" class="orderSubTotal" placeholder="0.00" readonly/>
+                            <input type="text" class="orderSubTotal" id="orderSubTotal" placeholder="0.00" readonly/>
                         </div>
                         <div class="invoiceRow">
                             <label>Discount</label>
-                            <input type="text" class="orderDiscount" placeholder="0.00"/>
+                            <input type="text" class="orderDiscount" id="orderDiscount" placeholder="0.00"/>
                         </div>
                         <div class="invoiceRow">
                             <label>Cash</label>
-                            <input type="text" class="orderCash" placeholder="0.00"/>
+                            <input type="text" class="orderCash" id="orderCash" placeholder="0.00"/>
                         </div>
                         <div class="invoiceRow">
                             <label>Balance</label>
-                            <input type="text" class="orderBalance" placeholder="0.00" readonly/>
+                            <input type="text" class="orderBalance" id="orderBalance" placeholder="0.00" readonly/>
                         </div>
 
-                        <button class="purchaseBtn" onclick="completePurchase()"> Purchase</button>
+                        <button class="purchaseBtn" id="purchaseBtn"> Purchase</button>
                     </div>
                 </div>
-                     <!-- Order Items Table -->
+                     <!-- Order Details Table -->
                     <div class="orderTablePanel">
                         <table class="dataTable">
                         <thead>
@@ -269,6 +271,8 @@
                             <th>Item Price</th>
                             <th>Item Qty</th>
                             <th>Total</th>
+                            <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody id="orderTBody"></tbody>
@@ -302,25 +306,57 @@
                           <div class="searchRow">
                               <div class="searchInputWrap">
                                   <img src="./assets/search.png" alt="Search Icon" class="searchIcon">
-                                  <input class="searchInput" id="cusSearch" type="text" placeholder="Search..." oninput="filterCustomers()"/>
+                                  <input class="searchInput" id="orderSearch" type="text" placeholder="Search..."/>
                               </div>
-                              <button class="btn searchBtn" onclick="filterCustomers()">Search</button>
+                              <button class="btn searchBtn" id="btnFilterOrders">Search</button>
+                              <button class="btn searchBtn" id="btnResetOrderSearch">Reset</button>
+
                           </div>
                           <table class="dataTable">
                               <thead>
                               <tr>
                                   <th>Order Id</th>
-                                  <th>Customer Id</th>  
+                                  <th>Customer</th>  
                                   <th>Date</th>
+                                  <th>Items</th>
                                   <th>Total</th>
-                                  <th>Discount</th>
-                                  <th>Subtotal</th>
-                                  <th>Paid</th>
+                                  <th>Action</th>
 
                               </tr>
                               </thead>
-                              <tbody id="cusTBody"></tbody>
+                              <tbody id="orderHistoryTBody"></tbody>
                           </table>
+                    </div>
+                </div>
+            </div>
+            <!-- ============= Order Details Modal======= -->
+            <div id="orderDetailModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Order Details: <span id="viewOrderId"></span></h3>
+                        <span class="close-modal" id="closeModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Customer:</strong> <span id="viewOrderCustomer"></span></p>
+                        <p><strong>Date:</strong> <span id="viewOrderDate"></span></p>
+
+                        <hr>
+                        <table class="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Item Code</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderItemsViewBody"></tbody>
+                        </table>
+                        <div class="modal-footer">
+                            <h4>Discount: <span id="viewOrderDiscount"></span></h4>
+                            <h4>Total: <span id="viewOrderTotal"></span></h4>
+                        </div>
                     </div>
                 </div>
             </div>
