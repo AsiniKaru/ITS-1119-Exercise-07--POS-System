@@ -10,15 +10,23 @@ let cart = [];
 document.addEventListener("DOMContentLoaded", () => {
       console.log('addEventListener...');
 
+    const dateInput = document.getElementById("orderDate");
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
     generateOrderID();
     loadCustomerDropdown();
     loadItemDropdown();
     loadOrders();
+    setDate();
 });
 
 document.addEventListener("customerUpdated", loadCustomerDropdown);
 document.addEventListener("itemUpdated", loadItemDropdown);
 
+// ================================================================ //
+//                       Orders Page                                //
+// ================================================================ //
 
 // ============== Generate Order ID =================
 function generateOrderID() {
@@ -273,6 +281,13 @@ function resetOrderForm(){
     loadOrders();
 }
 
+
+
+// ================================================================ //
+//                     Orders History Page                          //
+// ================================================================ //
+
+
 // ========= update Order History Table ==========
 
 function loadOrders(data = OrderDB) {
@@ -305,18 +320,15 @@ function loadOrders(data = OrderDB) {
 }
 
 
-
 // ================ Search Customer ====================
 document.getElementById("btnFilterOrders").addEventListener("click", () => {
     let query = document.getElementById("orderSearch").value.toLowerCase();
     
-    // Filter the OrderDB
     let filtered = OrderDB.filter(o => 
         o.orderId.toLowerCase().includes(query) || 
         o.custId.toLowerCase().includes(query)
     );
     
-    // Pass the filtered list to the loader
     loadOrders(filtered);
 });
 
@@ -325,4 +337,52 @@ document.getElementById("btnFilterOrders").addEventListener("click", () => {
 document.getElementById("btnResetOrderSearch").addEventListener("click", () => {
   document.getElementById("orderSearch").value = "";  
   loadOrders();
+});
+
+// ==================== Open Order Details Modal ==============
+window.openOrderDetails = function(orderId) {
+    const order = OrderDB.find(o => o.orderId === orderId);
+    if (!order) return;
+
+    const customer = CustomerDB.find(c => c.id === order.custId);
+
+    document.getElementById("viewOrderId").textContent = order.orderId;
+    document.getElementById("viewOrderCustomer").textContent = customer
+        ? `${order.custId} - ${customer.name}`
+        : order.custId;
+    document.getElementById("viewOrderDate").textContent = order.date;
+
+    const tbody = document.getElementById("orderItemsViewBody");
+    tbody.innerHTML = "";
+
+    order.orderDetails.forEach(item => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${item.itemId}</td>
+                <td>${item.itemName}</td>
+                <td>LKR ${item.unitPrice.toFixed(2)}</td>
+                <td>${item.qty}</td>
+                <td>LKR ${item.price.toFixed(2)}</td>
+            </tr>
+        `;
+    });
+
+    const grossTotal = order.orderDetails.reduce((sum, item) => sum + item.price, 0); // ✅ was order.OrderDetails
+    document.getElementById("viewOrderDiscount").textContent = `${order.discount}%`;  // ✅ uncomment this
+    document.getElementById("viewOrderTotal").textContent = `LKR ${order.total.toFixed(2)}`;
+
+    const modal = document.getElementById("orderDetailModal");
+    modal.style.display = "flex";
+}
+
+// ==================== Close Modal ==========================
+document.getElementById("closeModal").addEventListener("click", () => {
+    document.getElementById("orderDetailModal").style.display = "none";
+});
+
+// Close modal when clicking outside modal-content
+document.getElementById("orderDetailModal").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("orderDetailModal")) {
+        document.getElementById("orderDetailModal").style.display = "none";
+    }
 });

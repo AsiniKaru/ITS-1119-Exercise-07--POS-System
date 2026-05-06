@@ -21,12 +21,37 @@ export let ItemDB = [
 ];
 
 
+// export let OrderDB = [
+//   new Order("ORD-001","2026-05-01","CUS-001", 1500.00,10,[{orderId:"ORD-001", itemId: "ITM-001", qty: 2 }]),
+//   new Order("ORD-002","2026-05-02","CUS-002", 2200.00,20,[{orderId:"ORD-002", itemId: "ITM-004", qty: 2 }]),
+//   new Order("ORD-003","2026-05-03","CUS-003", 7800.00, 5,[{orderId:"ORD-003", itemId: "ITM-002", qty: 1 }]),
+//   new Order("ORD-004", "2026-05-04","CUS-004",1500.00, 0,[{orderId:"ORD-004", itemId: "ITM-004", qty: 2 }, {orderId:"ORD-004", itemId: "ITM-002", qty: 1 }]),
+//   new Order("ORD-005", "2026-05-05","CUS-005",6400.00, 3,[{orderId:"ORD-005", itemId: "ITM-005", qty: 1 }, {orderId:"ORD-005", itemId: "ITM-001", qty: 2 }]),
+// ];
+
 export let OrderDB = [
-  new Order("ORD-001","2026-05-01","CUS-001", 1500.00,10,[{orderId:"ORD-001", itemId: "ITM-001", qty: 2 }]),
-  new Order("ORD-002","2026-05-02","CUS-002", 2200.00,20,[{orderId:"ORD-002", itemId: "ITM-004", qty: 2 }]),
-  new Order("ORD-003","2026-05-03","CUS-003", 7800.00, 5,[{orderId:"ORD-003", itemId: "ITM-002", qty: 1 }]),
-  new Order("ORD-004", "2026-05-04","CUS-004",1500.00, 0,[{orderId:"ORD-004", itemId: "ITM-004", qty: 2 }, {orderId:"ORD-004", itemId: "ITM-002", qty: 1 }]),
-  new Order("ORD-005", "2026-05-05","CUS-005",6400.00, 3,[{orderId:"ORD-005", itemId: "ITM-005", qty: 1 }, {orderId:"ORD-005", itemId: "ITM-001", qty: 2 }]),
+  new Order("ORD-001", "2026-05-01", "CUS-001", 1500.00, 10, [
+    new OrderDetails("ORD-001", "ITM-001", "Fresh Milk 1L", 450.00, 2, 900.00),
+    new OrderDetails("ORD-001", "ITM-002", "Bread Loaf", 150.00, 4, 600.00)
+  ]),
+  new Order("ORD-002", "2026-05-02", "CUS-002", 1600.00, 20, [
+    new OrderDetails("ORD-002", "ITM-004", "Coca Cola 1L", 450.00, 2, 900.00),
+    new OrderDetails("ORD-002", "ITM-003", "Eggs (12 pack)", 350.00, 2, 700.00)
+  ]),
+  new Order("ORD-003", "2026-05-03", "CUS-003", 1500.00, 5, [
+    new OrderDetails("ORD-003", "ITM-002", "Bread Loaf", 150.00, 1, 150.00)
+  ]),
+  new Order("ORD-004", "2026-05-04", "CUS-004", 1050.00, 0, [
+    new OrderDetails("ORD-004", "ITM-004", "Coca Cola 1L", 450.00, 2, 900.00),
+    new OrderDetails("ORD-004", "ITM-002", "Bread Loaf", 150.00, 1, 150.00)
+  ]),
+  new Order("ORD-005", "2026-05-05", "CUS-005", 1200.00, 3, [
+    new OrderDetails("ORD-005", "ITM-005", "Yougert 250g", 300.00, 1, 300.00),
+    new OrderDetails("ORD-005", "ITM-001", "Fresh Milk 1L", 450.00, 2, 900.00)
+  ]),
+  new Order("ORD-006", "2026-05-05", "CUS-004", 700.00, 0, [
+    new OrderDetails("ORD-006", "ITM-003", "Eggs (12 pack)", 350.00, 2, 700.00)
+  ]),
 ];
 
 export let OrderDetailDB = [
@@ -40,24 +65,3 @@ export let OrderDetailDB = [
 ];
 
 
-
-// const Database = (() => {
-
-//   function init() {
-
-//     CustomerModel.seed();
-//     ItemModel.seed();
-
-
-//     CustomerController.init();
-//     ItemController.init();
-//     OrderController.init();
-
-
-//     updateStats();
-
-//     console.log('[Database] Bootstrapped successfully.');
-//   }
-
-//   return { init };
-// })();

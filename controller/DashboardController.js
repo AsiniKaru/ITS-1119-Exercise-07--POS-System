@@ -18,6 +18,5 @@ export function updateDashboardCounts() {
     $('#totalOrdersCount').text(`Rs. ${totalRevenue.toLocaleString('en-US', {minimumFractionDigits: 2})}`);
 }
 
-// Expose it to the global window object so LoginController can see it
 window.updateDashboardCount = updateDashboardCounts;
 

@@ -1,4 +1,3 @@
-  // import { updateDashboardCounts } from "./DashboardController.js";
 
 const CREDENTIALS = { username: 'admin', password: '111' };
 
@@ -19,8 +18,7 @@ function login() {
       const display = uName.charAt(0).toUpperCase() + uName.slice(1); 
       document.getElementById('loggedUser').textContent  = display;
 
-    // Bootstrap models & controllers
-      // Database.init();
+  
       if (typeof window.updateDashboardCount === 'function') {
             window.updateDashboardCount();
         } else {
